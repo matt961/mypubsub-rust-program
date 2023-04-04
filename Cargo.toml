@@ -1,0 +1,22 @@
+[package]
+name = "rust-rabbitmq"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "pubapp"
+path = "src/pubapp.rs"
+
+[[bin]]
+name = "subapp"
+path = "src/subapp.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+lapin = "2.1.1"
+tokio = { version = "1.27.0", features = ["full"] }
+tokio-executor-trait = "2.1.1"
+tokio-reactor-trait = "1.1.0"
+tracing = "0.1.37"
+tracing-subscriber = "0.3.16"
