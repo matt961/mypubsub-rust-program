@@ -1,22 +1,26 @@
 use lapin::{
-    options::{BasicPublishOptions, QueueDeclareOptions},
-    protocol::basic::AMQPProperties,
-    types::{FieldTable, ReplyCode},
     uri::{AMQPAuthority, AMQPUri},
     Connection, ConnectionProperties,
 };
 
-pub async fn connect() -> lapin::Result<Connection> {
+pub struct AMQPConnConf<'a> {
+    pub host: &'a str,
+    pub username: &'a str,
+    pub password: &'a str,
+    pub vhost: &'a str
+}
+
+pub async fn connect(conf: &AMQPConnConf<'_>) -> lapin::Result<Connection> {
     let uri = AMQPUri {
         authority: AMQPAuthority {
-            host: "rabbitmq".to_owned(),
+            host: conf.host.to_owned(),
             userinfo: lapin::uri::AMQPUserInfo {
-                username: "dev".to_owned(),
-                password: "letmein".to_owned(),
+                username: conf.username.to_owned(),
+                password: conf.password.to_owned(),
             },
             ..Default::default()
         },
-        vhost: "dev".to_owned(),
+        vhost: conf.vhost.to_owned(),
         ..Default::default()
     };
 
